@@ -41,3 +41,10 @@
   float: right;
   background-color: rgb(30, 210, 255);
 }
+
+#upload-image {
+  width: 200px;
+  height: 200px;
+  margin-left: 16px;
+  object-fit: contain;
+}

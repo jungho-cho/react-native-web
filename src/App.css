@@ -23,6 +23,7 @@ body,
   width: 1024px;
   margin: 0 auto;
   padding-bottom: 24px;
+  min-height: 100vh;
 }
 
 #body > h1 {
