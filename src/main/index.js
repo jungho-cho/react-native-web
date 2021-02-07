@@ -5,28 +5,53 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { API_URL } from "../config/constants";
+import { Carousel } from "antd";
 
 dayjs.extend(relativeTime);
 
 function MainPage() {
   const [products, setProducts] = React.useState([]);
+  const [banners, setBanners] = React.useState([]);
+
   React.useEffect(() => {
-    const url = `${API_URL}/products`;
+    const productsUrl = `${API_URL}/products`;
     axios
-      .get(url)
+      .get(productsUrl)
       .then(function (result) {
         setProducts(result.data.products);
       })
       .catch(function (error) {
         console.error(`Error = ${error}`);
       });
+
+    const bannersUrl = `${API_URL}/banners`;
+    axios
+      .get(bannersUrl)
+      .then((result) => {
+        setBanners(result.data.banners);
+        console.log(result.data.banners);
+      })
+      .catch((error) => {
+        console.error("get banners error : ", error);
+      });
   }, []);
 
   return (
     <div>
-      <div id="banner">
+      <Carousel autoplay>
+        {banners.map((banner, index) => {
+          return (
+            <Link to={banner.href}>
+              <div id="banner">
+                <img src={`${API_URL}/${banner.imageUrl}`} />
+              </div>
+            </Link>
+          );
+        })}
+      </Carousel>
+      {/* <div id="banner">
         <img src="images/banners/banner1.png" />
-      </div>
+      </div> */}
       <h1>판매되는 상품들</h1>
       <div id="product-list">
         {products.map((product, index) => {
